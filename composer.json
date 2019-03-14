@@ -1,0 +1,20 @@
+{
+    "name": "roave/no-leaks",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Roave\\NoLeaks\\PHPUnit\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RoaveE2ETest\\NoLeaks\\PHPUnit\\": "test/e2e",
+            "RoaveUnitTest\\NoLeaks\\PHPUnit\\": "test/unit"
+        }
+    },
+    "require": {
+        "php": "^7.3",
+        "ext-json": "*",
+        "phpunit/phpunit": "^8.0.4"
+    }
+}
