@@ -64,8 +64,8 @@ MESSAGE
     /** @return array<int, object> */
     private function generateSomeMemoryTrash() : array
     {
-        return array_map(function () : object {
-            return new \stdClass();
+        return array_map(function (int $number) : object {
+            return (object) ['a' => $number];
         }, range(1, 100));
     }
 
