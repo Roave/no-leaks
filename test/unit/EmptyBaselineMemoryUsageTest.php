@@ -23,5 +23,6 @@ final class EmptyBaselineMemoryUsageTest extends TestCase
         $test->emptyTest();
 
         self::assertSame($memoryUsage, memory_get_usage());
+        self::assertSame(1, $test->getNumAssertions());
     }
 }
