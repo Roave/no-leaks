@@ -13,9 +13,9 @@ use stdClass;
 /**
  * @covers \Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints
  *
- * @uses \Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest
- * @uses \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak
- * @uses \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
+ * @uses   \Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest
+ * @uses   \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak
+ * @uses   \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
  */
 final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 {
@@ -60,15 +60,7 @@ final class CollectTestExecutionMemoryFootprintsTest extends TestCase
         $mocks[] = $this->createMock(stdClass::class);
         $mocks[] = $this->createMock(stdClass::class);
 
-        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
-        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
-        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
+        $this->collectBaseline($collector);
 
         $this->expectExceptionMessage(<<<'MESSAGE'
 The following test produced memory leaks:
@@ -87,15 +79,7 @@ MESSAGE
 
         $mocks = [$this->createMock(stdClass::class)];
 
-        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
-        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
-        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
+        $this->collectBaseline($collector);
 
         $collector->executeBeforeTest('doubleMemoryEatingTest');
         $mocks[] = $this->createMock(stdClass::class);
@@ -192,5 +176,20 @@ MESSAGE
             ->with(self::equalTo(new Baseline('emptyTest')));
 
         (new CollectTestExecutionMemoryFootprints())->startTestSuite($testSuite);
+    }
+
+    private function collectBaseline(CollectTestExecutionMemoryFootprints $collector) : void
+    {
+        $mocks = [$this->createMock(stdClass::class)];
+
+        foreach (range(1, 10) as $index) {
+            $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
+
+            $mocks[$index] = $this->createMock(stdClass::class);
+
+            $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
+        }
+
+        $this->consumeMocks(...$mocks);
     }
 }
