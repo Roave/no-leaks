@@ -87,8 +87,6 @@ final class CollectTestExecutionMemoryFootprints
                 implode("\n * ", array_keys($leaks))
             ));
         }
-
-        var_dump($memoryUsages, $leaks, $baselineMemoryUsage);
     }
 
     // The following bits are just stubbing the implementation of the
