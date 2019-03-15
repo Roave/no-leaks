@@ -110,13 +110,28 @@ MESSAGE
         $mocks[] = $this->createMock(stdClass::class);
         $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
 
+        // Create multiple GC'd cycles to ensure that measured memory at the beginning and end of a test
+        // are consistent
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
         $collector->executeBeforeTest('forcefullyCollectedNonLeakingCycleTest');
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
         $this->createGarbageCollectableCycle();
         $collector->executeAfterSuccessfulTest('forcefullyCollectedNonLeakingCycleTest', 0.0);
         $collector->executeBeforeTest('forcefullyCollectedNonLeakingCycleTest');
         $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
         $collector->executeAfterSuccessfulTest('forcefullyCollectedNonLeakingCycleTest', 0.0);
         $collector->executeBeforeTest('forcefullyCollectedNonLeakingCycleTest');
+        $this->createGarbageCollectableCycle();
+        $this->createGarbageCollectableCycle();
         $this->createGarbageCollectableCycle();
         $collector->executeAfterSuccessfulTest('forcefullyCollectedNonLeakingCycleTest', 0.0);
 
