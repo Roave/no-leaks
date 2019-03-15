@@ -156,6 +156,19 @@ MESSAGE
             ->executeAfterLastTest();
     }
 
+    public function testWillFailIfBaselineTestCouldNotBeRunSuccessfully() : void
+    {
+        $collector = new CollectTestExecutionMemoryFootprints();
+
+        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
+
+        $this->expectExceptionMessage(
+            'Could not find baseline test: impossible to determine PHPUnit base memory overhead'
+        );
+
+        $collector->executeAfterLastTest();
+    }
+
     private function createGarbageCollectableCycle() : void
     {
         $a = new stdClass();
