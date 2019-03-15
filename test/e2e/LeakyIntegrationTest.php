@@ -22,6 +22,16 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
+    public function doesNotLeakMemoryIfCyclesAreGarbageCollected() : void
+    {
+        $mock = $this->createMock(stdClass::class);
+
+        $mock->property = $mock;
+
+        $this->addToAssertionCount(1);
+    }
+
+    /** @test */
     public function doesLeakATinyAmountOfMemory() : void
     {
         self::$memoryLeakingStupidMistake[] = null;
