@@ -5,3 +5,5 @@ composer.lock
 phpstan.neon
 psalm.xml
 phpcs.xml
+infection.json
+infection.log
