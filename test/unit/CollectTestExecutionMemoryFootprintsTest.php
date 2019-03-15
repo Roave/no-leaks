@@ -81,6 +81,56 @@ MESSAGE
         $this->consumeMocks(...$mocks);
     }
 
+    public function testGarbageCollectedMemoryCyclesAreNotReportedAsFailures() : void
+    {
+        $collector = new CollectTestExecutionMemoryFootprints();
+
+        $mocks = [$this->createMock(stdClass::class)];
+
+        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
+        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
+        $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeAfterSuccessfulTest(Baseline::class . '::' . Baseline::TEST_METHOD, 0.0);
+
+        $collector->executeBeforeTest('doubleMemoryEatingTest');
+        $mocks[] = $this->createMock(stdClass::class);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+        $collector->executeBeforeTest('doubleMemoryEatingTest');
+        $mocks[] = $this->createMock(stdClass::class);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+        $collector->executeBeforeTest('doubleMemoryEatingTest');
+        $mocks[] = $this->createMock(stdClass::class);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+
+        $collector->executeBeforeTest('forcefullyCollectedNonLeakingCycleTest');
+        $this->createGarbageCollectableCycle();
+        $collector->executeAfterSuccessfulTest('forcefullyCollectedNonLeakingCycleTest', 0.0);
+        $collector->executeBeforeTest('forcefullyCollectedNonLeakingCycleTest');
+        $this->createGarbageCollectableCycle();
+        $collector->executeAfterSuccessfulTest('forcefullyCollectedNonLeakingCycleTest', 0.0);
+        $collector->executeBeforeTest('forcefullyCollectedNonLeakingCycleTest');
+        $this->createGarbageCollectableCycle();
+        $collector->executeAfterSuccessfulTest('forcefullyCollectedNonLeakingCycleTest', 0.0);
+
+        $this->expectExceptionMessage(<<<'MESSAGE'
+The following test produced memory leaks:
+ * doubleMemoryEatingTest
+MESSAGE
+        );
+
+        $collector->executeAfterLastTest();
+
+        $this->consumeMocks(...$mocks);
+    }
+
     public function testWillFailIfBaselineTestCouldNotBeRun() : void
     {
         $this->expectExceptionMessage(
@@ -89,6 +139,15 @@ MESSAGE
 
         (new CollectTestExecutionMemoryFootprints())
             ->executeAfterLastTest();
+    }
+
+    private function createGarbageCollectableCycle() : void
+    {
+        $a = new stdClass();
+        $b = new stdClass();
+
+        $a->b = $b;
+        $b->a = $a;
     }
 
     private function consumeMocks(stdClass ...$mocks) : void
