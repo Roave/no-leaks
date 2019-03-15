@@ -16,6 +16,7 @@ use PHPUnit\Runner\BeforeTestHook;
 use Throwable;
 use function array_combine;
 use function array_filter;
+use function array_intersect_key;
 use function array_key_exists;
 use function array_keys;
 use function array_map;

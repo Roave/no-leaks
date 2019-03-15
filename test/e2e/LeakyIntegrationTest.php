@@ -29,9 +29,13 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesNotLeakMemoryIfCyclesAreGarbageCollected() : void
     {
-        $mock = $this->createMock(stdClass::class);
+        $a = new stdClass();
+        $b = new stdClass();
+        $c = new stdClass();
 
-        $mock->property = $mock;
+        $a->b = $b;
+        $b->c = $c;
+        $c->a = $a;
 
         $this->addToAssertionCount(1);
     }

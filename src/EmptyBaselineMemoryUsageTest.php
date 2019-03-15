@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class EmptyBaselineMemoryUsageTest extends TestCase
 {
-    public const TEST_METHOD = 'emptyTest';
+    public const TEST_METHOD      = 'emptyTest';
     private const ASSERTION_COUNT = 1;
 
     /**

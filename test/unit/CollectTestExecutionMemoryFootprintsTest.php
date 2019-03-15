@@ -9,13 +9,14 @@ use PHPUnit\Framework\TestSuite;
 use Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints;
 use Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest as Baseline;
 use stdClass;
+use function range;
 
 /**
- * @covers \Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints
- *
  * @uses   \Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest
  * @uses   \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak
  * @uses   \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
+ *
+ * @covers \Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints
  */
 final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 {

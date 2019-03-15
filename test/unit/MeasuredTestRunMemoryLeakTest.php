@@ -9,9 +9,9 @@ use Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak;
 use Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak;
 
 /**
- * @covers \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
- *
  * @uses \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak
+ *
+ * @covers \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
  */
 final class MeasuredTestRunMemoryLeakTest extends TestCase
 {
