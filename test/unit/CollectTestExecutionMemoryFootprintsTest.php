@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestSuite;
 use Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints;
 use Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest as Baseline;
 use stdClass;
+use function array_map;
+use function array_merge;
 use function range;
 
 /**
@@ -38,18 +40,15 @@ final class CollectTestExecutionMemoryFootprintsTest extends TestCase
         $mocks[] = $this->createMock(stdClass::class);
         $collector->executeAfterSuccessfulTest('nonLeakyTest', 0.0);
 
-        $collector->executeBeforeTest('doubleMemoryEatingTest');
-        $mocks[] = $this->createMock(stdClass::class);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
-        $collector->executeBeforeTest('doubleMemoryEatingTest');
-        $mocks[] = $this->createMock(stdClass::class);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
-        $collector->executeBeforeTest('doubleMemoryEatingTest');
-        $mocks[] = $this->createMock(stdClass::class);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+        $collector->executeBeforeTest('memoryEatingTest');
+        $mocks = $this->createMocks(10, $mocks);
+        $collector->executeAfterSuccessfulTest('memoryEatingTest', 0.0);
+        $collector->executeBeforeTest('memoryEatingTest');
+        $mocks = $this->createMocks(10, $mocks);
+        $collector->executeAfterSuccessfulTest('memoryEatingTest', 0.0);
+        $collector->executeBeforeTest('memoryEatingTest');
+        $mocks = $this->createMocks(10, $mocks);
+        $collector->executeAfterSuccessfulTest('memoryEatingTest', 0.0);
 
         $collector->executeBeforeTest('failingTest');
         $mocks[] = $this->createMock(stdClass::class);
@@ -65,7 +64,7 @@ final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 
         $this->expectExceptionMessage(<<<'MESSAGE'
 The following test produced memory leaks:
- * doubleMemoryEatingTest
+ * memoryEatingTest
 MESSAGE
         );
 
@@ -82,18 +81,15 @@ MESSAGE
 
         $this->collectBaseline($collector);
 
-        $collector->executeBeforeTest('doubleMemoryEatingTest');
-        $mocks[] = $this->createMock(stdClass::class);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
-        $collector->executeBeforeTest('doubleMemoryEatingTest');
-        $mocks[] = $this->createMock(stdClass::class);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
-        $collector->executeBeforeTest('doubleMemoryEatingTest');
-        $mocks[] = $this->createMock(stdClass::class);
-        $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+        $collector->executeBeforeTest('memoryEatingTest');
+        $mocks = $this->createMocks(10, $mocks);
+        $collector->executeAfterSuccessfulTest('memoryEatingTest', 0.0);
+        $collector->executeBeforeTest('memoryEatingTest');
+        $mocks = $this->createMocks(10, $mocks);
+        $collector->executeAfterSuccessfulTest('memoryEatingTest', 0.0);
+        $collector->executeBeforeTest('memoryEatingTest');
+        $mocks = $this->createMocks(10, $mocks);
+        $collector->executeAfterSuccessfulTest('memoryEatingTest', 0.0);
 
         // Create multiple GC'd cycles to ensure that measured memory at the beginning and end of a test
         // are consistent
@@ -122,7 +118,7 @@ MESSAGE
 
         $this->expectExceptionMessage(<<<'MESSAGE'
 The following test produced memory leaks:
- * doubleMemoryEatingTest
+ * memoryEatingTest
 MESSAGE
         );
 
@@ -192,5 +188,17 @@ MESSAGE
         }
 
         $this->consumeMocks(...$mocks);
+    }
+
+    /**
+     * @param stdClass[] $mocks
+     *
+     * @return stdClass[]
+     */
+    private function createMocks(int $amount, array $mocks) : array
+    {
+        return array_merge($mocks, array_map(function (int $index) : stdClass {
+            return $this->createMock(stdClass::class);
+        }, range(1, $amount)));
     }
 }
