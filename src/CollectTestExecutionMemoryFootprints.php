@@ -77,6 +77,8 @@ final class CollectTestExecutionMemoryFootprints
             )
         );
 
+        \assert(is_array($memoryUsages));
+
         $leaks = array_filter(array_map(function (MeasuredTestRunMemoryLeak $profile) use ($baselineMemoryUsage) : bool {
             return $profile->leaksMemory($baselineMemoryUsage);
         }, $memoryUsages));
