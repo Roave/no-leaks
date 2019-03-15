@@ -81,11 +81,13 @@ final class CollectTestExecutionMemoryFootprints implements
             $this->postTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD]
         );
 
+        $successfullyExecutedTests = array_intersect_key($this->preTestMemoryUsages, $this->postTestMemoryUsages);
+
         $memoryUsages = array_combine(
-            array_keys($this->preTestMemoryUsages),
+            array_keys($successfullyExecutedTests),
             array_map(
                 [MeasuredTestRunMemoryLeak::class, 'fromTestMemoryUsages'],
-                $this->preTestMemoryUsages,
+                $successfullyExecutedTests,
                 $this->postTestMemoryUsages
             )
         );

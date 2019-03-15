@@ -27,29 +27,38 @@ final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 
         $mocks[] = $this->createMock(stdClass::class);
 
-        $collector->executeBeforeTest('test1');
+        $collector->executeBeforeTest('nonLeakyTest');
         $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('test1', 0.0);
-        $collector->executeBeforeTest('test1');
+        $collector->executeAfterSuccessfulTest('nonLeakyTest', 0.0);
+        $collector->executeBeforeTest('nonLeakyTest');
         $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('test1', 0.0);
-        $collector->executeBeforeTest('test1');
+        $collector->executeAfterSuccessfulTest('nonLeakyTest', 0.0);
+        $collector->executeBeforeTest('nonLeakyTest');
         $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('test1', 0.0);
+        $collector->executeAfterSuccessfulTest('nonLeakyTest', 0.0);
 
-        // Following section eats double the memory
-        $collector->executeBeforeTest('test2');
+        $collector->executeBeforeTest('doubleMemoryEatingTest');
         $mocks[] = $this->createMock(stdClass::class);
         $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('test2', 0.0);
-        $collector->executeBeforeTest('test2');
+        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+        $collector->executeBeforeTest('doubleMemoryEatingTest');
         $mocks[] = $this->createMock(stdClass::class);
         $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('test2', 0.0);
-        $collector->executeBeforeTest('test2');
+        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+        $collector->executeBeforeTest('doubleMemoryEatingTest');
         $mocks[] = $this->createMock(stdClass::class);
         $mocks[] = $this->createMock(stdClass::class);
-        $collector->executeAfterSuccessfulTest('test2', 0.0);
+        $collector->executeAfterSuccessfulTest('doubleMemoryEatingTest', 0.0);
+
+        $collector->executeBeforeTest('failingTest');
+        $mocks[] = $this->createMock(stdClass::class);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeBeforeTest('failingTest');
+        $mocks[] = $this->createMock(stdClass::class);
+        $mocks[] = $this->createMock(stdClass::class);
+        $collector->executeBeforeTest('failingTest');
+        $mocks[] = $this->createMock(stdClass::class);
+        $mocks[] = $this->createMock(stdClass::class);
 
         $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
         $mocks[] = $this->createMock(stdClass::class);
@@ -63,7 +72,7 @@ final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 
         $this->expectExceptionMessage(<<<'MESSAGE'
 The following test produced memory leaks:
- * test2
+ * doubleMemoryEatingTest
 MESSAGE
         );
 
