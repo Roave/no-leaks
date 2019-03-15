@@ -24,7 +24,6 @@ final class MeasuredBaselineTestMemoryLeak
     private function __construct(int $firstMemoryUsage, int ...$furtherMemoryUsages)
     {
         $this->baselineTestRunsMemoryLeaks = array_merge([$firstMemoryUsage], $furtherMemoryUsages);
-        $this->avg = array_sum($this->baselineTestRunsMemoryLeaks) / count($this->baselineTestRunsMemoryLeaks);
     }
 
     /**

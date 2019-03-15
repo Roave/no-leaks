@@ -19,7 +19,6 @@ final class MeasuredTestRunMemoryLeak
     private function __construct(int $firstMemoryUsage, int ...$furtherMemoryUsages)
     {
         $this->memoryUsages = array_merge([$firstMemoryUsage], $furtherMemoryUsages);
-        $this->avg = array_sum($this->memoryUsages) / count($this->memoryUsages);
     }
 
     /**
