@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 final class EmptyBaselineMemoryUsageTest extends TestCase
 {
     public const TEST_METHOD = 'emptyTest';
+    private const ASSERTION_COUNT = 1;
 
     /**
      * An empty baseline test that will be used to measure pre- and post-run
@@ -24,6 +25,6 @@ final class EmptyBaselineMemoryUsageTest extends TestCase
      */
     public function emptyTest() : void
     {
-        $this->addToAssertionCount(1);
+        $this->addToAssertionCount(self::ASSERTION_COUNT);
     }
 }
