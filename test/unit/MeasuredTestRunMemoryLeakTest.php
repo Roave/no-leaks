@@ -8,7 +8,11 @@ use PHPUnit\Framework\TestCase;
 use Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak;
 use Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak;
 
-/** @covers \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak */
+/**
+ * @covers \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
+ *
+ * @uses \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak
+ */
 final class MeasuredTestRunMemoryLeakTest extends TestCase
 {
     public function testMemoryLeakNotDetectedIFAtLeastOneRunIsSameAsBaselineRunLeak() : void

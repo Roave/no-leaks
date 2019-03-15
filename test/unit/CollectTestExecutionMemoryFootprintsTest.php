@@ -10,7 +10,13 @@ use Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints;
 use Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest as Baseline;
 use stdClass;
 
-/** @covers \Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints */
+/**
+ * @covers \Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints
+ *
+ * @uses \Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest
+ * @uses \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak
+ * @uses \Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak
+ */
 final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 {
     public function testWillCollectFootprints() : void
