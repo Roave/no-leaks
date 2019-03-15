@@ -13,8 +13,11 @@
     executionOrder="random"
 >
     <testsuites>
-        <testsuite name="Memleak detection unit tests">
+        <testsuite name="unit">
             <directory>./test/unit</directory>
+        </testsuite>
+        <testsuite name="e2e">
+            <file>./test/e2e/run-full-suite.phpt</file>
         </testsuite>
     </testsuites>
 
