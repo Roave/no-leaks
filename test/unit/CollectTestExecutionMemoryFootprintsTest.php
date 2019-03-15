@@ -81,6 +81,16 @@ MESSAGE
         $this->consumeMocks(...$mocks);
     }
 
+    public function testWillFailIfBaselineTestCouldNotBeRun() : void
+    {
+        $this->expectExceptionMessage(
+            'Could not find baseline test: impossible to determine PHPUnit base memory overhead'
+        );
+
+        (new CollectTestExecutionMemoryFootprints())
+            ->executeAfterLastTest();
+    }
+
     private function consumeMocks(stdClass ...$mocks) : void
     {
     }
