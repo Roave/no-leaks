@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace RoaveE2ETest\NoLeaks\PHPUnit;
 
 use PHPUnit\Framework\TestCase;
+use stdClass;
+use function spl_autoload_register;
+use function str_repeat;
 
 /** @coversNothing this is an integration test that spans the entirety of the library */
 final class LeakyIntegrationTest extends TestCase
@@ -29,7 +32,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakAMock() : void
     {
-        self::$memoryLeakingStupidMistake[] = $this->createMock(\stdClass::class);
+        self::$memoryLeakingStupidMistake[] = $this->createMock(stdClass::class);
 
         $this->addToAssertionCount(1);
     }
@@ -37,7 +40,8 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakOneObject() : void
     {
-        self::$memoryLeakingStupidMistake[] = new class {};
+        self::$memoryLeakingStupidMistake[] = new class {
+        };
 
         $this->addToAssertionCount(1);
     }
@@ -45,8 +49,10 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakTwoObjects() : void
     {
-        self::$memoryLeakingStupidMistake[] = new class {};
-        self::$memoryLeakingStupidMistake[] = new class {};
+        self::$memoryLeakingStupidMistake[] = new class {
+        };
+        self::$memoryLeakingStupidMistake[] = new class {
+        };
 
         $this->addToAssertionCount(1);
     }
@@ -62,7 +68,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakAnAutoloader() : void
     {
-        spl_autoload_register(function (string $className) : bool {
+        spl_autoload_register(static function (string $className) : bool {
             return false;
         });
 

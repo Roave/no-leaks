@@ -4,6 +4,19 @@ declare(strict_types=1);
 
 namespace Roave\NoLeaks\PHPUnit;
 
+use Exception;
+use const JSON_THROW_ON_ERROR;
+use function array_count_values;
+use function array_filter;
+use function array_map;
+use function array_merge;
+use function array_slice;
+use function array_sum;
+use function array_values;
+use function count;
+use function json_encode;
+use function sprintf;
+
 /**
  * @internal this class is not to be used outside this package
  *
@@ -35,21 +48,21 @@ final class MeasuredBaselineTestMemoryLeak
         array $postBaselineTestMemoryUsages
     ) : self {
         if (count($preBaselineTestMemoryUsages) !== count($postBaselineTestMemoryUsages)) {
-            throw new \Exception('Pre- and post- baseline test run collected memory usages don\'t match in number');
+            throw new Exception('Pre- and post- baseline test run collected memory usages don\'t match in number');
         }
 
         if (count($preBaselineTestMemoryUsages) < 3) {
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'At least 3 baseline test run memory profiles are required, %d given',
                 count($preBaselineTestMemoryUsages)
             ));
         }
 
-        $memoryUsages = array_values(array_map(function (int $beforeRun, int $afterRun) : int {
+        $memoryUsages = array_values(array_map(static function (int $beforeRun, int $afterRun) : int {
             $memoryUsage = $afterRun - $beforeRun;
 
             if ($memoryUsage < 0) {
-                throw new \Exception(sprintf(
+                throw new Exception(sprintf(
                     'Baseline memory usage of %d detected: invalid negative memory usage',
                     $memoryUsage
                 ));
@@ -61,13 +74,13 @@ final class MeasuredBaselineTestMemoryLeak
         // Note: profile 0 is discarded, as it may contain autoloading and other static test suite initialisation state
         $relevantMemoryUsages = array_slice($memoryUsages, 1);
 
-        if ([] === array_filter(array_count_values($relevantMemoryUsages), function (int $count) : bool {
+        if (array_filter(array_count_values($relevantMemoryUsages), static function (int $count) : bool {
             return $count > 1;
-        })) {
+        }) === []) {
             // @TODO good enough for detecting standard deviation for now, I guess? :|
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'Very inconsistent baseline memory usage profiles: could not find two equal values in profile %s',
-                json_encode($memoryUsages, \JSON_THROW_ON_ERROR)
+                json_encode($memoryUsages, JSON_THROW_ON_ERROR)
             ));
         }
 

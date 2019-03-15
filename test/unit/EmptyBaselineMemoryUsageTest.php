@@ -6,6 +6,7 @@ namespace RoaveUnitTest\NoLeaks\PHPUnit;
 
 use PHPUnit\Framework\TestCase;
 use Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest as Baseline;
+use function memory_get_usage;
 
 /** @covers \Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest */
 final class EmptyBaselineMemoryUsageTest extends TestCase
