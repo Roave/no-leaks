@@ -1,0 +1,36 @@
+{
+    "name": "roave/no-leaks",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Roave\\NoLeaks\\PHPUnit\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RoaveE2ETest\\NoLeaks\\PHPUnit\\": "test/e2e",
+            "RoaveUnitTest\\NoLeaks\\PHPUnit\\": "test/unit"
+        }
+    },
+    "require": {
+        "php": "^7.3",
+        "ext-json": "*",
+        "phpunit/phpunit": "^8.0.4"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "bin": [
+        "bin/roave-no-leaks"
+    ],
+    "require-dev": {
+        "doctrine/coding-standard": "^5.0",
+        "infection/infection": "^0.12.2",
+        "phpstan/phpstan": "^0.11.4",
+        "phpstan/phpstan-phpunit": "^0.11.0",
+        "phpstan/phpstan-strict-rules": "^0.11.0",
+        "psalm/plugin-phpunit": "^0.5.3",
+        "squizlabs/php_codesniffer": "^3.4",
+        "vimeo/psalm": "^3.2"
+    }
+}

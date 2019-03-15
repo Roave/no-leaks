@@ -1,2 +1,9 @@
 vendor
 .phpunit.result.cache
+phpunit.xml
+composer.lock
+phpstan.neon
+psalm.xml
+phpcs.xml
+infection.json
+infection.log

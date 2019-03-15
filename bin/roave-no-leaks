@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+namespace Roave\NoLeaks\CLI;
+
+(function () {
+    require __DIR__ . '/roave-no-leaks.php';
+})();

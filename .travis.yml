@@ -1,0 +1,27 @@
+language: php
+
+sudo: false
+
+php:
+  - 7.3
+  - 7.4snapshot
+  - nightly
+
+env:
+  matrix:
+    - DEPENDENCIES="high"
+    - DEPENDENCIES="low"
+
+before_script:
+  - sh .travis.install.sh
+
+script:
+  - ./vendor/bin/phpstan analyse
+  - ./vendor/bin/psalm
+  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpcs
+  - phpdbg -qrr ./vendor/bin/infection -vvv --test-framework-options='--testsuite=unit' --min-msi=98 --min-covered-msi=98
+
+matrix:
+  allow_failures:
+    - php: nightly
