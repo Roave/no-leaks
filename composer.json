@@ -17,6 +17,9 @@
         "ext-json": "*",
         "phpunit/phpunit": "^8.0.4"
     },
+    "config": {
+        "sort-packages": true
+    },
     "bin": [
         "bin/roave-no-leaks"
     ]
