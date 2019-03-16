@@ -23,7 +23,7 @@ In your `phpunit.xml` configuration, add following section:
     </extensions>
 ```
 
-Then run:s
+Then run:
 
 ```sh
 vendor/bin/roave-no-leaks
