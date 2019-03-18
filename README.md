@@ -38,12 +38,12 @@ Exception: The following test produced memory leaks:
  * My\Leaky\Test::testSomethingElse
 ```
 
-## Configuration and parameters
+## Configuration and Parameters
 
 [`vendor/bin/roave-no-leaks`](./bin/roave-no-leaks) supports all
 configuration parameters and console parameters of PHPUnit.
 
-## Known issues
+## Known Issues
 
 Please be aware that this is not a full substitute for PHPUnit:
 
