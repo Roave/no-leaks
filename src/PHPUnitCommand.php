@@ -10,23 +10,31 @@ use function array_merge;
 
 final class PHPUnitCommand extends Command
 {
-    public function run(array $argv, bool $exit = true) : int
-    {
-        // Should be improved
-        $this->arguments['listeners'] = array_merge([new CollectTestExecutionMemoryFootprints()], $this->arguments['listeners'] ?? []);
-        return parent::run($argv, $exit);
-    }
-
     public static function main(bool $exit = true) : int
     {
         $command = new static();
         return $command->run($_SERVER['argv'], $exit);
     }
 
+    protected function handleArguments(array $argv) : void
+    {
+        parent::handleArguments($argv);
+        if ($_ENV['REGISTER_NO_LEAKS'] ?? '' !== 'true') {
+            return;
+        }
+
+        $this->arguments['listeners'] = array_merge(
+            [new CollectTestExecutionMemoryFootprints()],
+            $this->arguments['listeners'] ?? []
+        );
+    }
+
     protected function createRunner() : TestRunner
     {
-        $testRunner =  new TestRunner($this->arguments['loader']);
-        $testRunner->addExtension(new CollectTestExecutionMemoryFootprints());
+        $testRunner = new TestRunner($this->arguments['loader']);
+        if ($_ENV['REGISTER_NO_LEAKS'] ?? '' === true) {
+            $testRunner->addExtension(new CollectTestExecutionMemoryFootprints());
+        }
         return $testRunner;
     }
 }

@@ -12,6 +12,11 @@
     verbose="true"
     executionOrder="random"
 >
+    <php>
+        <!-- to autoconfigure roave/no-leaks -->
+        <env name="REGISTER_NO_LEAKS" value="false" />
+    </php>
+
     <testsuites>
         <testsuite name="unit">
             <directory>./test/unit</directory>
