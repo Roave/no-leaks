@@ -19,10 +19,9 @@ final class PHPUnitCommand extends Command
     protected function handleArguments(array $argv) : void
     {
         parent::handleArguments($argv);
-        if ($_ENV['REGISTER_NO_LEAKS'] ?? '' !== 'true') {
+        if (! $this->isAutoConfigureEnabled()) {
             return;
         }
-
         $this->arguments['listeners'] = array_merge(
             [new CollectTestExecutionMemoryFootprints()],
             $this->arguments['listeners'] ?? []
@@ -32,9 +31,14 @@ final class PHPUnitCommand extends Command
     protected function createRunner() : TestRunner
     {
         $testRunner = new TestRunner($this->arguments['loader']);
-        if ($_ENV['REGISTER_NO_LEAKS'] ?? '' === true) {
+        if ($this->isAutoConfigureEnabled()) {
             $testRunner->addExtension(new CollectTestExecutionMemoryFootprints());
         }
         return $testRunner;
+    }
+
+    protected function isAutoConfigureEnabled() : bool
+    {
+        return isset($_ENV['REGISTER_NO_LEAKS']) && $_ENV['REGISTER_NO_LEAKS'] === '1';
     }
 }
