@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Roave\NoLeaks\CLI;
 
-use PHPUnit\TextUI\Command;
+use Roave\NoLeaks\PHPUnit\PHPUnitCommand;
 
 (function () {
     if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
@@ -15,5 +15,5 @@ use PHPUnit\TextUI\Command;
 
     $_SERVER['argv'][] = '--repeat=3';
 
-    Command::main();
+    PHPUnitCommand::main();
 })();
