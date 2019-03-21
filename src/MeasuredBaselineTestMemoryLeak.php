@@ -51,13 +51,6 @@ final class MeasuredBaselineTestMemoryLeak
             throw new Exception('Pre- and post- baseline test run collected memory usages don\'t match in number');
         }
 
-        if (count($preBaselineTestMemoryUsages) < 3) {
-            throw new Exception(sprintf(
-                'At least 3 baseline test run memory profiles are required, %d given',
-                count($preBaselineTestMemoryUsages)
-            ));
-        }
-
         $memoryUsages = array_map(static function (int $beforeRun, int $afterRun) : int {
             return $afterRun - $beforeRun;
         }, $preBaselineTestMemoryUsages, $postBaselineTestMemoryUsages);
@@ -71,6 +64,13 @@ final class MeasuredBaselineTestMemoryLeak
                 return $memoryUsage >= 0;
             }
         ));
+
+        if (count($nonNegativeMemoryUsages) < 2) {
+            throw new Exception(sprintf(
+                'At least 3 baseline test run memory profiles are required, %d given',
+                count($nonNegativeMemoryUsages) + 1
+            ));
+        }
 
         if (array_filter(array_count_values($nonNegativeMemoryUsages), static function (int $count) : bool {
             return $count > 1;

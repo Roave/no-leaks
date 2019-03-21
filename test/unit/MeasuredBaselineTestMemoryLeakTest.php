@@ -51,11 +51,30 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
 
     public function testRejectsDataSetWithTooFewMemoryLeakProfiles() : void
     {
+        $validMeasurement = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+            [100, 50, 60],
+            [200, 50, 60]
+        );
+
+
+        self::assertTrue($validMeasurement->lessThan(1));
+        self::assertFalse($validMeasurement->lessThan(0));
+
         $this->expectExceptionMessage('At least 3 baseline test run memory profiles are required, 2 given');
 
         MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50],
-            [200, 49]
+            [200, 50]
+        );
+    }
+
+    public function testRejectsDataSetWithTooFewValidMemoryLeakProfiles() : void
+    {
+        $this->expectExceptionMessage('At least 3 baseline test run memory profiles are required, 2 given');
+
+        MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+            [100, 50, 50],
+            [200, 50, 49]
         );
     }
 
