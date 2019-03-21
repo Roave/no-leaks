@@ -35,13 +35,17 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         );
     }
 
-    public function testRejectsNegativeMemoryLeaks() : void
+    public function testFiltersNegativeMemoryLeaks() : void
     {
-        $this->expectExceptionMessage('Baseline memory usage of -1 detected: invalid negative memory usage');
-
-        MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
-            [100, 50, 51],
-            [200, 49, 51]
+        self::assertEquals(
+            MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+                [100, 51, 52, 53],
+                [200, 51, 53, 54]
+            ),
+            MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+                [100, 50, 51, 51, 53],
+                [200, 49, 51, 52, 54]
+            )
         );
     }
 
