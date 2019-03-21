@@ -21,6 +21,7 @@ final class LeakyIntegrationTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
+    /** @test */
     public function failingTestShouldNotBeCheckedForLeaks() : void
     {
         self::fail();
