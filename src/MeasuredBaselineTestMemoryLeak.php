@@ -65,9 +65,12 @@ final class MeasuredBaselineTestMemoryLeak
         // Note: profile 0 is discarded, as it may contain autoloading and other static test suite initialisation state
         $relevantMemoryUsages = array_slice($memoryUsages, 1);
 
-        $nonNegativeMemoryUsages = array_values(array_filter($relevantMemoryUsages, function (int $memoryUsage) : bool {
-            return $memoryUsage >= 0;
-        }));
+        $nonNegativeMemoryUsages = array_values(array_filter(
+            $relevantMemoryUsages,
+            static function (int $memoryUsage) : bool {
+                return $memoryUsage >= 0;
+            }
+        ));
 
         if (array_filter(array_count_values($nonNegativeMemoryUsages), static function (int $count) : bool {
             return $count > 1;
