@@ -56,7 +56,6 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
             [200, 50, 60]
         );
 
-
         self::assertTrue($validMeasurement->lessThan(1));
         self::assertFalse($validMeasurement->lessThan(0));
 
