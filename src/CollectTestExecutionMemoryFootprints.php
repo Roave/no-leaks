@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Roave\NoLeaks\PHPUnit;
 
 use Exception;
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestListener;
+use PHPUnit\Framework\TestListenerDefaultImplementation;
 use PHPUnit\Framework\TestSuite;
-use PHPUnit\Framework\Warning;
 use PHPUnit\Runner\AfterLastTestHook;
 use PHPUnit\Runner\AfterSuccessfulTestHook;
 use PHPUnit\Runner\BeforeTestHook;
-use Throwable;
 use function array_combine;
 use function array_filter;
 use function array_intersect_key;
@@ -38,6 +35,8 @@ final class CollectTestExecutionMemoryFootprints implements
     AfterLastTestHook,
     TestListener
 {
+    use TestListenerDefaultImplementation;
+
     /** @var array<string, array<int, int>> */
     private $preTestMemoryUsages = [];
 
@@ -105,41 +104,5 @@ final class CollectTestExecutionMemoryFootprints implements
                 implode("\n * ", array_keys($leaks))
             ));
         }
-    }
-
-    public function addError(Test $test, Throwable $t, float $time) : void
-    {
-    }
-
-    public function addWarning(Test $test, Warning $e, float $time) : void
-    {
-    }
-
-    public function addFailure(Test $test, AssertionFailedError $e, float $time) : void
-    {
-    }
-
-    public function addIncompleteTest(Test $test, Throwable $t, float $time) : void
-    {
-    }
-
-    public function addRiskyTest(Test $test, Throwable $t, float $time) : void
-    {
-    }
-
-    public function addSkippedTest(Test $test, Throwable $t, float $time) : void
-    {
-    }
-
-    public function endTestSuite(TestSuite $suite) : void
-    {
-    }
-
-    public function startTest(Test $test) : void
-    {
-    }
-
-    public function endTest(Test $test, float $time) : void
-    {
     }
 }
