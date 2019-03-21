@@ -35,23 +35,45 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         );
     }
 
-    public function testRejectsNegativeMemoryLeaks() : void
+    public function testFiltersNegativeMemoryLeaks() : void
     {
-        $this->expectExceptionMessage('Baseline memory usage of -1 detected: invalid negative memory usage');
-
-        MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
-            [100, 50, 51],
-            [200, 49, 51]
+        self::assertEquals(
+            MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+                [100, 51, 52, 53],
+                [200, 51, 53, 54]
+            ),
+            MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+                [100, 50, 51, 51, 53],
+                [200, 49, 51, 52, 54]
+            )
         );
     }
 
     public function testRejectsDataSetWithTooFewMemoryLeakProfiles() : void
     {
+        $validMeasurement = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+            [100, 50, 60],
+            [200, 50, 60]
+        );
+
+        self::assertTrue($validMeasurement->lessThan(1));
+        self::assertFalse($validMeasurement->lessThan(0));
+
         $this->expectExceptionMessage('At least 3 baseline test run memory profiles are required, 2 given');
 
         MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50],
-            [200, 49]
+            [200, 50]
+        );
+    }
+
+    public function testRejectsDataSetWithTooFewValidMemoryLeakProfiles() : void
+    {
+        $this->expectExceptionMessage('At least 3 baseline test run memory profiles are required, 2 given');
+
+        MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+            [100, 50, 50],
+            [200, 50, 49]
         );
     }
 

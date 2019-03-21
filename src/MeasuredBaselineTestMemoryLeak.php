@@ -51,30 +51,28 @@ final class MeasuredBaselineTestMemoryLeak
             throw new Exception('Pre- and post- baseline test run collected memory usages don\'t match in number');
         }
 
-        if (count($preBaselineTestMemoryUsages) < 3) {
-            throw new Exception(sprintf(
-                'At least 3 baseline test run memory profiles are required, %d given',
-                count($preBaselineTestMemoryUsages)
-            ));
-        }
-
-        $memoryUsages = array_values(array_map(static function (int $beforeRun, int $afterRun) : int {
-            $memoryUsage = $afterRun - $beforeRun;
-
-            if ($memoryUsage < 0) {
-                throw new Exception(sprintf(
-                    'Baseline memory usage of %d detected: invalid negative memory usage',
-                    $memoryUsage
-                ));
-            }
-
-            return $memoryUsage;
-        }, $preBaselineTestMemoryUsages, $postBaselineTestMemoryUsages));
+        $memoryUsages = array_map(static function (int $beforeRun, int $afterRun) : int {
+            return $afterRun - $beforeRun;
+        }, $preBaselineTestMemoryUsages, $postBaselineTestMemoryUsages);
 
         // Note: profile 0 is discarded, as it may contain autoloading and other static test suite initialisation state
         $relevantMemoryUsages = array_slice($memoryUsages, 1);
 
-        if (array_filter(array_count_values($relevantMemoryUsages), static function (int $count) : bool {
+        $nonNegativeMemoryUsages = array_values(array_filter(
+            $relevantMemoryUsages,
+            static function (int $memoryUsage) : bool {
+                return $memoryUsage >= 0;
+            }
+        ));
+
+        if (count($nonNegativeMemoryUsages) < 2) {
+            throw new Exception(sprintf(
+                'At least 3 baseline test run memory profiles are required, %d given',
+                count($nonNegativeMemoryUsages) + 1
+            ));
+        }
+
+        if (array_filter(array_count_values($nonNegativeMemoryUsages), static function (int $count) : bool {
             return $count > 1;
         }) === []) {
             // @TODO good enough for detecting standard deviation for now, I guess? :|
@@ -84,7 +82,7 @@ final class MeasuredBaselineTestMemoryLeak
             ));
         }
 
-        return new self(...$relevantMemoryUsages);
+        return new self(...$nonNegativeMemoryUsages);
     }
 
     public function lessThan(int $testRunMemoryLeak) : bool
