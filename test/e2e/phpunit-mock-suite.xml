@@ -11,14 +11,6 @@
     beStrictAboutTodoAnnotatedTests="true"
     verbose="true"
 >
-    <listeners>
-        <listener class="Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints"/>
-    </listeners>
-
-    <extensions>
-        <extension class="Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints"/>
-    </extensions>
-
     <testsuites>
         <testsuite name="Memleak detection e2e tests">
             <file>./LeakyIntegrationTest.php</file>

@@ -11,20 +11,6 @@ composer require --dev roave/no-leaks
 
 ## Usage
 
-In your `phpunit.xml` configuration, add following section:
-
-```xml
-    <listeners>
-        <listener class="Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints"/>
-    </listeners>
-
-    <extensions>
-        <extension class="Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints"/>
-    </extensions>
-```
-
-Then run:
-
 ```sh
 vendor/bin/roave-no-leaks
 ```
