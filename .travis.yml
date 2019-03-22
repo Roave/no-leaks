@@ -20,7 +20,7 @@ script:
   - ./vendor/bin/psalm
   - ./vendor/bin/phpunit
   - ./vendor/bin/phpcs
-  - phpdbg -qrr ./vendor/bin/infection -vvv --test-framework-options='--testsuite=unit' --min-msi=98 --min-covered-msi=98
+  - phpdbg -qrr ./vendor/bin/infection -vvv --test-framework-options='--testsuite=unit' --min-msi=96 --min-covered-msi=96
 
 matrix:
   allow_failures:

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Roave\NoLeaks\PHPUnit;
 
-use Exception;
 use function array_filter;
 use function array_map;
 use function array_merge;
@@ -12,7 +11,6 @@ use function array_slice;
 use function array_values;
 use function count;
 use function min;
-use function sprintf;
 
 /**
  * @internal this class is not to be used outside this package
@@ -41,15 +39,14 @@ final class MeasuredTestRunMemoryLeak
     ) : self {
         $snapshotsCount = min(count($preRunMemoryUsages), count($postRunMemoryUsages));
 
-        return new self(...array_values(array_map(static function (int $beforeRun, int $afterRun) : int {
-            $memoryUsage = $afterRun - $beforeRun;
-
-            if ($memoryUsage < 0) {
-                throw new Exception(sprintf('Baseline memory usage of %d detected: invalid negative memory usage', $memoryUsage));
+        return new self(...array_values(array_filter(
+            array_map(static function (int $beforeRun, int $afterRun) : int {
+                return $afterRun - $beforeRun;
+            }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount)),
+            static function (int $memoryUsage) {
+                return $memoryUsage >= 0;
             }
-
-            return $memoryUsage;
-        }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount))));
+        )));
     }
 
     public function leaksMemory(MeasuredBaselineTestMemoryLeak $baseline) : bool
