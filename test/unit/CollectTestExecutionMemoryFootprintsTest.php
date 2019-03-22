@@ -137,6 +137,26 @@ MESSAGE
             ->executeAfterLastTest();
     }
 
+    public function testWillSucceedIfNoLeakingTestsWereFound() : void
+    {
+        $collector = new CollectTestExecutionMemoryFootprints();
+
+        $this->collectBaseline($collector);
+
+        $collector->executeBeforeTest('noLeaksHere');
+        $collector->executeAfterSuccessfulTest('noLeaksHere', 0.0);
+        $collector->executeBeforeTest('noLeaksHere');
+        $collector->executeAfterSuccessfulTest('noLeaksHere', 0.0);
+        $collector->executeBeforeTest('noLeaksHere');
+        $collector->executeAfterSuccessfulTest('noLeaksHere', 0.0);
+
+        $collector->executeAfterLastTest();
+
+        // CollectTestExecutionMemoryFootprints acts as a `void` assertion, so if it doesn't fail, there are
+        // no observable side-effects. Increasing the assertion counter is the only way to declare that.
+        $this->addToAssertionCount(1);
+    }
+
     public function testWillFailIfBaselineTestCouldNotBeRunSuccessfully() : void
     {
         $collector = new CollectTestExecutionMemoryFootprints();
