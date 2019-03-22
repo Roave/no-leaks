@@ -39,14 +39,9 @@ final class MeasuredTestRunMemoryLeak
     ) : self {
         $snapshotsCount = min(count($preRunMemoryUsages), count($postRunMemoryUsages));
 
-        return new self(...array_values(array_filter(
-            array_map(static function (int $beforeRun, int $afterRun) : int {
-                return $afterRun - $beforeRun;
-            }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount)),
-            static function (int $memoryUsage) {
-                return $memoryUsage >= 0;
-            }
-        )));
+        return new self(...array_values(array_map(static function (int $beforeRun, int $afterRun) : int {
+            return $afterRun - $beforeRun;
+        }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount))));
     }
 
     public function leaksMemory(MeasuredBaselineTestMemoryLeak $baseline) : bool

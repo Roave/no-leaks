@@ -75,18 +75,16 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
     }
 
-    public function testSkipsMemoryProfilesWithNegativeLeak() : void
+    public function testMemoryLeakDetectionAroundZeroBaseline() : void
     {
-        self::assertEquals(
-            MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
-                [1000, 200, 300, 400],
-                [2000, 220, 330, 400]
-            ),
-            MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
-                [1000, 100, 200, 300, 400],
-                [2000, 99, 220, 330, 400]
-            )
+        $averageBaselineOf0 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
+            [100, 10, 20, 30],
+            [200, 10, 20, 30]
         );
+
+        self::assertFalse(MeasuredTestRunMemoryLeak::fromTestMemoryUsages([1], [0])->leaksMemory($averageBaselineOf0));
+        self::assertFalse(MeasuredTestRunMemoryLeak::fromTestMemoryUsages([0], [0])->leaksMemory($averageBaselineOf0));
+        self::assertTrue(MeasuredTestRunMemoryLeak::fromTestMemoryUsages([0], [1])->leaksMemory($averageBaselineOf0));
     }
 
     public function testWillOnlyConsiderPreRunMemorySnapshotsForWhichAPostRunSnapshotExists() : void
