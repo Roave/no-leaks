@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class EmptyBaselineMemoryUsageTest extends TestCase
 {
-    public const TEST_METHOD      = 'emptyTest';
+    public const TEST_METHOD      = 'testMemoryBaselineWithEmptyTestBody';
     private const ASSERTION_COUNT = 1;
 
     /**
@@ -23,7 +23,7 @@ final class EmptyBaselineMemoryUsageTest extends TestCase
      * Tests that deviate from this baseline pre/post memory usage are most
      * likely leaking.
      */
-    public function emptyTest() : void
+    public function testMemoryBaselineWithEmptyTestBody() : void
     {
         $this->addToAssertionCount(self::ASSERTION_COUNT);
     }

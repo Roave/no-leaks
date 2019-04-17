@@ -190,7 +190,7 @@ MESSAGE
         $testSuite
             ->expects(self::once())
             ->method('addTest')
-            ->with(self::equalTo(new Baseline('emptyTest')));
+            ->with(self::equalTo(new Baseline('testMemoryBaselineWithEmptyTestBody')));
 
         (new CollectTestExecutionMemoryFootprints())->startTestSuite($testSuite);
     }
