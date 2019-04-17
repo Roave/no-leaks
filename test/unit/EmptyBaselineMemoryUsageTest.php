@@ -20,7 +20,7 @@ final class EmptyBaselineMemoryUsageTest extends TestCase
         // intentional immediate value override - we're offsetting memory usage here, on purpose
         $memoryUsage = memory_get_usage();
 
-        $test->emptyTest();
+        $test->testMemoryBaselineWithEmptyTestBody();
 
         self::assertSame($memoryUsage, memory_get_usage());
         self::assertSame(1, $test->getNumAssertions());
