@@ -15,6 +15,7 @@
     "require": {
         "php": "^7.3",
         "ext-json": "*",
+        "ext-xml": "*",
         "phpunit/phpunit": "^8.0.4"
     },
     "config": {
