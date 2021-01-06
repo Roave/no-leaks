@@ -1,6 +1,5 @@
 # roave/no-leaks
 
-[![Build Status](https://travis-ci.org/Roave/no-leaks.png?branch=master)](https://travis-ci.org/Roave/no-leaks)
 [![Latest Stable Version](https://poser.pugx.org/roave/no-leaks/v/stable.png)](https://packagist.org/packages/roave/no-leaks)
 
 ![roave/no-leaks](./logo/no-leaks.png)
