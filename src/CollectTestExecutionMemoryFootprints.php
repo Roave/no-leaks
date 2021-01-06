@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Runner\AfterLastTestHook;
 use PHPUnit\Runner\AfterSuccessfulTestHook;
 use PHPUnit\Runner\BeforeTestHook;
+
 use function array_combine;
 use function array_filter;
 use function array_intersect_key;
@@ -38,36 +39,38 @@ final class CollectTestExecutionMemoryFootprints implements
     use TestListenerDefaultImplementation;
 
     /** @var array<string, array<int, int>> */
-    private $preTestMemoryUsages = [];
+    private array $preTestMemoryUsages = [];
 
     /** @var array<string, array<int, int>> */
-    private $postTestMemoryUsages = [];
+    private array $postTestMemoryUsages = [];
 
-    public function startTestSuite(TestSuite $suite) : void
+    public function startTestSuite(TestSuite $suite): void
     {
         $suite->addTest(new EmptyBaselineMemoryUsageTest(EmptyBaselineMemoryUsageTest::TEST_METHOD));
     }
 
-    public function executeBeforeTest(string $test) : void
+    public function executeBeforeTest(string $test): void
     {
         gc_collect_cycles();
 
         $this->preTestMemoryUsages[$test][] = memory_get_usage();
     }
 
-    public function executeAfterSuccessfulTest(string $test, float $time) : void
+    public function executeAfterSuccessfulTest(string $test, float $time): void
     {
         gc_collect_cycles();
 
         $this->postTestMemoryUsages[$test][] = memory_get_usage();
     }
 
-    public function executeAfterLastTest() : void
+    public function executeAfterLastTest(): void
     {
-        if (! (
+        if (
+            ! (
             array_key_exists(EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD, $this->preTestMemoryUsages)
             && array_key_exists(EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD, $this->postTestMemoryUsages)
-        )) {
+            )
+        ) {
             throw new Exception('Could not find baseline test: impossible to determine PHPUnit base memory overhead');
         }
 
@@ -94,7 +97,7 @@ final class CollectTestExecutionMemoryFootprints implements
 
         assert(is_array($memoryUsages));
 
-        $leaks = array_filter(array_map(static function (MeasuredTestRunMemoryLeak $profile) use ($baselineMemoryUsage) : bool {
+        $leaks = array_filter(array_map(static function (MeasuredTestRunMemoryLeak $profile) use ($baselineMemoryUsage): bool {
             return $profile->leaksMemory($baselineMemoryUsage);
         }, $memoryUsages));
 

@@ -15,7 +15,7 @@ use Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak;
  */
 final class MeasuredTestRunMemoryLeakTest extends TestCase
 {
-    public function testMemoryLeakNotDetectedIFAtLeastOneRunIsSameAsBaselineRunLeak() : void
+    public function testMemoryLeakNotDetectedIFAtLeastOneRunIsSameAsBaselineRunLeak(): void
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
@@ -30,7 +30,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
     }
 
-    public function testMemoryLeakNotDetectedIfAtLeastOneRunIsBelowBaselineRunLeak() : void
+    public function testMemoryLeakNotDetectedIfAtLeastOneRunIsBelowBaselineRunLeak(): void
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
@@ -45,7 +45,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
     }
 
-    public function testMemoryLeakDetectedIfAllRunsAreHigherThanBaselineRunLeak() : void
+    public function testMemoryLeakDetectedIfAllRunsAreHigherThanBaselineRunLeak(): void
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
@@ -60,7 +60,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertTrue($measuredTestLeak->leaksMemory($averageBaselineOf10));
     }
 
-    public function testMemoryLeakNotDetectedIfAllRunsAreZero() : void
+    public function testMemoryLeakNotDetectedIfAllRunsAreZero(): void
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
@@ -75,7 +75,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
     }
 
-    public function testMemoryLeakDetectionAroundZeroBaseline() : void
+    public function testMemoryLeakDetectionAroundZeroBaseline(): void
     {
         $averageBaselineOf0 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
@@ -87,7 +87,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertTrue(MeasuredTestRunMemoryLeak::fromTestMemoryUsages([0], [1])->leaksMemory($averageBaselineOf0));
     }
 
-    public function testWillOnlyConsiderPreRunMemorySnapshotsForWhichAPostRunSnapshotExists() : void
+    public function testWillOnlyConsiderPreRunMemorySnapshotsForWhichAPostRunSnapshotExists(): void
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
@@ -102,7 +102,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
         self::assertTrue($measuredTestLeak->leaksMemory($averageBaselineOf10));
     }
 
-    public function testWillOnlyConsiderPostRunMemorySnapshotsForWhichAPreRunSnapshotExists() : void
+    public function testWillOnlyConsiderPostRunMemorySnapshotsForWhichAPreRunSnapshotExists(): void
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],

@@ -6,6 +6,7 @@ namespace RoaveE2ETest\NoLeaks\PHPUnit;
 
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
 use function spl_autoload_register;
 use function str_repeat;
 
@@ -13,19 +14,19 @@ use function str_repeat;
 final class LeakyIntegrationTest extends TestCase
 {
     /** @test */
-    public function doesNotLeakMemory() : void
+    public function doesNotLeakMemory(): void
     {
         $this->addToAssertionCount(1);
     }
 
     /** @test */
-    public function failingTestShouldNotBeCheckedForLeaks() : void
+    public function failingTestShouldNotBeCheckedForLeaks(): void
     {
         self::fail();
     }
 
     /** @test */
-    public function doesNotLeakMemoryIfCyclesAreGarbageCollected() : void
+    public function doesNotLeakMemoryIfCyclesAreGarbageCollected(): void
     {
         $a = new stdClass();
         $b = new stdClass();
@@ -39,7 +40,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakATinyAmountOfMemory() : void
+    public function doesLeakATinyAmountOfMemory(): void
     {
         LeakyStaticObject::leak(null);
 
@@ -47,7 +48,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakAMock() : void
+    public function doesLeakAMock(): void
     {
         LeakyStaticObject::leak($this->createMock(stdClass::class));
 
@@ -55,7 +56,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakOneObject() : void
+    public function doesLeakOneObject(): void
     {
         LeakyStaticObject::leak(new class {
         });
@@ -64,7 +65,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakTwoObjects() : void
+    public function doesLeakTwoObjects(): void
     {
         LeakyStaticObject::leak(new class {
         });
@@ -75,7 +76,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakTestItself() : void
+    public function doesLeakTestItself(): void
     {
         LeakyStaticObject::leak($this);
 
@@ -83,9 +84,9 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakAnAutoloader() : void
+    public function doesLeakAnAutoloader(): void
     {
-        spl_autoload_register(static function (string $className) : bool {
+        spl_autoload_register(static function (string $className): bool {
             return false;
         });
 
@@ -93,9 +94,9 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakAStaticAutoloader() : void
+    public function doesLeakAStaticAutoloader(): void
     {
-        spl_autoload_register(static function (string $className) : bool {
+        spl_autoload_register(static function (string $className): bool {
             return false;
         });
 
@@ -103,7 +104,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakLotsAndLotsOfMemory() : void
+    public function doesLeakLotsAndLotsOfMemory(): void
     {
         LeakyStaticObject::leak(str_repeat('a', 100000));
         LeakyStaticObject::leak(str_repeat('a', 100000));

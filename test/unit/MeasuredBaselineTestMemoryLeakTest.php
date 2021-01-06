@@ -10,7 +10,7 @@ use Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak;
 /** @covers \Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak */
 final class MeasuredBaselineTestMemoryLeakTest extends TestCase
 {
-    public function testDetectsAverageMemoryLeakThresholdByExcludingFirstProfile() : void
+    public function testDetectsAverageMemoryLeakThresholdByExcludingFirstProfile(): void
     {
         $measured = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 40, 50, 60, 70, 80],
@@ -22,7 +22,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         self::assertFalse($measured->lessThan(17));
     }
 
-    public function testRejectsHighlyInconsistentProfiles() : void
+    public function testRejectsHighlyInconsistentProfiles(): void
     {
         $this->expectExceptionMessage(
             'Very inconsistent baseline memory usage profiles: '
@@ -35,7 +35,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         );
     }
 
-    public function testFiltersNegativeMemoryLeaks() : void
+    public function testFiltersNegativeMemoryLeaks(): void
     {
         self::assertEquals(
             MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
@@ -49,7 +49,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         );
     }
 
-    public function testRejectsDataSetWithTooFewMemoryLeakProfiles() : void
+    public function testRejectsDataSetWithTooFewMemoryLeakProfiles(): void
     {
         $validMeasurement = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50, 60],
@@ -67,7 +67,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         );
     }
 
-    public function testRejectsDataSetWithTooFewValidMemoryLeakProfiles() : void
+    public function testRejectsDataSetWithTooFewValidMemoryLeakProfiles(): void
     {
         $this->expectExceptionMessage('At least 3 baseline test run memory profiles are required, 2 given');
 
@@ -77,7 +77,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         );
     }
 
-    public function testRejectsDataSetWithDifferentPreAndPostMemoryUsageSnapshots() : void
+    public function testRejectsDataSetWithDifferentPreAndPostMemoryUsageSnapshots(): void
     {
         $this->expectExceptionMessage('Pre- and post- baseline test run collected memory usages don\'t match in number');
 

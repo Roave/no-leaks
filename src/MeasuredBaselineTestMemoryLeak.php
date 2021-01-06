@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Roave\NoLeaks\PHPUnit;
 
 use Exception;
-use const JSON_THROW_ON_ERROR;
+
 use function array_count_values;
 use function array_filter;
 use function array_map;
 use function array_merge;
 use function array_slice;
 use function array_sum;
-use function array_values;
 use function count;
 use function json_encode;
 use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
 
 /**
  * @internal this class is not to be used outside this package
@@ -32,7 +33,7 @@ final class MeasuredBaselineTestMemoryLeak
      * @var array<int, int> the amount of memory consumed for running the baseline test, usually caused by collecting
      *                      stats about it or similar state, retained by the test runner and its plugins
      */
-    private $baselineTestRunsMemoryLeaks;
+    private array $baselineTestRunsMemoryLeaks;
 
     private function __construct(int $firstMemoryUsage, int ...$furtherMemoryUsages)
     {
@@ -46,12 +47,12 @@ final class MeasuredBaselineTestMemoryLeak
     public static function fromBaselineTestMemoryUsages(
         array $preBaselineTestMemoryUsages,
         array $postBaselineTestMemoryUsages
-    ) : self {
+    ): self {
         if (count($preBaselineTestMemoryUsages) !== count($postBaselineTestMemoryUsages)) {
             throw new Exception('Pre- and post- baseline test run collected memory usages don\'t match in number');
         }
 
-        $memoryUsages = array_map(static function (int $beforeRun, int $afterRun) : int {
+        $memoryUsages = array_map(static function (int $beforeRun, int $afterRun): int {
             return $afterRun - $beforeRun;
         }, $preBaselineTestMemoryUsages, $postBaselineTestMemoryUsages);
 
@@ -60,7 +61,7 @@ final class MeasuredBaselineTestMemoryLeak
 
         $nonNegativeMemoryUsages = array_filter(
             $relevantMemoryUsages,
-            static function (int $memoryUsage) : bool {
+            static function (int $memoryUsage): bool {
                 return $memoryUsage >= 0;
             }
         );
@@ -72,9 +73,11 @@ final class MeasuredBaselineTestMemoryLeak
             ));
         }
 
-        if (array_filter(array_count_values($nonNegativeMemoryUsages), static function (int $count) : bool {
-            return $count > 1;
-        }) === []) {
+        if (
+            array_filter(array_count_values($nonNegativeMemoryUsages), static function (int $count): bool {
+                return $count > 1;
+            }) === []
+        ) {
             // @TODO good enough for detecting standard deviation for now, I guess? :|
             throw new Exception(sprintf(
                 'Very inconsistent baseline memory usage profiles: could not find two equal values in profile %s',
@@ -85,8 +88,8 @@ final class MeasuredBaselineTestMemoryLeak
         return new self(...$nonNegativeMemoryUsages);
     }
 
-    public function lessThan(int $testRunMemoryLeak) : bool
+    public function lessThan(int $testRunMemoryLeak): bool
     {
-        return (array_sum($this->baselineTestRunsMemoryLeaks) / count($this->baselineTestRunsMemoryLeaks)) < $testRunMemoryLeak;
+        return array_sum($this->baselineTestRunsMemoryLeaks) / count($this->baselineTestRunsMemoryLeaks) < $testRunMemoryLeak;
     }
 }

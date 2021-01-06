@@ -8,7 +8,6 @@ use function array_filter;
 use function array_map;
 use function array_merge;
 use function array_slice;
-use function array_values;
 use function count;
 use function min;
 
@@ -22,7 +21,7 @@ use function min;
 final class MeasuredTestRunMemoryLeak
 {
     /** @var array<int, int> positive integers, representing used memory */
-    private $memoryUsages;
+    private array $memoryUsages;
 
     private function __construct(int $firstMemoryUsage, int ...$furtherMemoryUsages)
     {
@@ -36,20 +35,20 @@ final class MeasuredTestRunMemoryLeak
     public static function fromTestMemoryUsages(
         array $preRunMemoryUsages,
         array $postRunMemoryUsages
-    ) : self {
+    ): self {
         $snapshotsCount = min(count($preRunMemoryUsages), count($postRunMemoryUsages));
 
-        return new self(...array_map(static function (int $beforeRun, int $afterRun) : int {
+        return new self(...array_map(static function (int $beforeRun, int $afterRun): int {
             return $afterRun - $beforeRun;
         }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount)));
     }
 
-    public function leaksMemory(MeasuredBaselineTestMemoryLeak $baseline) : bool
+    public function leaksMemory(MeasuredBaselineTestMemoryLeak $baseline): bool
     {
         // If at least one of the runs does not leak memory, then the leak does not come from inside the test,
         // but from the test runner noise. This is naive, but also an acceptable threshold for most test suites
         return array_filter(array_map(
-            static function (int $memoryUsage) use ($baseline) : bool {
+            static function (int $memoryUsage) use ($baseline): bool {
                     return ! $baseline->lessThan($memoryUsage);
             },
             $this->memoryUsages

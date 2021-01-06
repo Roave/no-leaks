@@ -8,7 +8,7 @@ namespace RoaveE2ETest\NoLeaks\PHPUnit;
 final class LeakyStaticObject
 {
     /** @var array<int, mixed> */
-    public static $memoryLeakingStupidMistake = [];
+    public static array $memoryLeakingStupidMistake = [];
 
     /** @param mixed $value */
     public static function leak($value): void
