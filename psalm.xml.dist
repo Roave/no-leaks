@@ -14,42 +14,24 @@
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="info"/>
-
-        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
-
-        <DeprecatedMethod errorLevel="info"/>
-        <DeprecatedProperty errorLevel="info"/>
-        <DeprecatedClass errorLevel="info"/>
-        <DeprecatedConstant errorLevel="info"/>
-        <DeprecatedInterface errorLevel="info"/>
-        <DeprecatedTrait errorLevel="info"/>
-
         <InternalMethod errorLevel="suppress"/>
-        <InternalProperty errorLevel="info"/>
-        <InternalClass errorLevel="suppress"/>
-
-        <MissingClosureReturnType errorLevel="info"/>
-        <MissingReturnType errorLevel="info"/>
-        <MissingPropertyType errorLevel="info"/>
-        <InvalidDocblock errorLevel="info"/>
-        <MisplacedRequiredParam errorLevel="info"/>
-
-        <PropertyNotSetInConstructor errorLevel="info"/>
-        <MissingConstructor errorLevel="info"/>
-        <MissingClosureParamType errorLevel="info"/>
-        <MissingParamType errorLevel="info"/>
-
-        <RedundantCondition errorLevel="info"/>
-
-        <DocblockTypeContradiction errorLevel="info"/>
-        <RedundantConditionGivenDocblockType errorLevel="info"/>
-
-        <UnresolvableInclude errorLevel="info"/>
-
-        <RawObjectIteration errorLevel="info"/>
-
-        <InvalidStringClass errorLevel="info"/>
+        <InternalClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Roave\NoLeaks\PHPUnit\MeasuredTestRunMemoryLeak"/>
+                <referencedClass name="Roave\NoLeaks\PHPUnit\MeasuredBaselineTestMemoryLeak"/>
+                <referencedClass name="Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest"/>
+            </errorLevel>
+        </InternalClass>
+        <DeprecatedInterface>
+            <errorLevel type="suppress">
+                <referencedClass name="PHPUnit\Framework\TestListener"/>
+            </errorLevel>
+        </DeprecatedInterface>
+        <DeprecatedTrait>
+            <errorLevel type="suppress">
+                <file name="src/CollectTestExecutionMemoryFootprints.php"/>
+            </errorLevel>
+        </DeprecatedTrait>
     </issueHandlers>
 
     <plugins>
