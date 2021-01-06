@@ -48,7 +48,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesNotLeakGarbageCollectedMocks() : void
+    public function doesNotLeakGarbageCollectedMocks(): void
     {
         $this->createMock(stdClass::class);
 
@@ -56,7 +56,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesNotLeakGarbageCollectedProphecyMocks() : void
+    public function doesNotLeakGarbageCollectedProphecyMocks(): void
     {
         LeakyStaticObject::leak($this->prophesize(stdClass::class));
 
@@ -72,7 +72,7 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesLeakAProphecyMock() : void
+    public function doesLeakAProphecyMock(): void
     {
         LeakyStaticObject::leak($this->prophesize(stdClass::class));
 
