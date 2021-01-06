@@ -23,7 +23,7 @@ final class EmptyBaselineMemoryUsageTest extends TestCase
      * Tests that deviate from this baseline pre/post memory usage are most
      * likely leaking.
      */
-    public function testMemoryBaselineWithEmptyTestBody() : void
+    public function testMemoryBaselineWithEmptyTestBody(): void
     {
         $this->addToAssertionCount(self::ASSERTION_COUNT);
     }

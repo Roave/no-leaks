@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestSuite;
 use Roave\NoLeaks\PHPUnit\CollectTestExecutionMemoryFootprints;
 use Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest as Baseline;
 use stdClass;
+
 use function array_map;
 use function array_merge;
 use function range;
@@ -22,7 +23,7 @@ use function range;
  */
 final class CollectTestExecutionMemoryFootprintsTest extends TestCase
 {
-    public function testWillCollectFootprints() : void
+    public function testWillCollectFootprints(): void
     {
         $collector = new CollectTestExecutionMemoryFootprints();
 
@@ -73,7 +74,7 @@ MESSAGE
         $this->consumeMocks(...$mocks);
     }
 
-    public function testGarbageCollectedMemoryCyclesAreNotReportedAsFailures() : void
+    public function testGarbageCollectedMemoryCyclesAreNotReportedAsFailures(): void
     {
         $collector = new CollectTestExecutionMemoryFootprints();
 
@@ -127,7 +128,7 @@ MESSAGE
         $this->consumeMocks(...$mocks);
     }
 
-    public function testWillFailIfBaselineTestCouldNotBeRun() : void
+    public function testWillFailIfBaselineTestCouldNotBeRun(): void
     {
         $this->expectExceptionMessage(
             'Could not find baseline test: impossible to determine PHPUnit base memory overhead'
@@ -137,7 +138,7 @@ MESSAGE
             ->executeAfterLastTest();
     }
 
-    public function testWillSucceedIfNoLeakingTestsWereFound() : void
+    public function testWillSucceedIfNoLeakingTestsWereFound(): void
     {
         $collector = new CollectTestExecutionMemoryFootprints();
 
@@ -157,7 +158,7 @@ MESSAGE
         $this->addToAssertionCount(1);
     }
 
-    public function testWillFailIfBaselineTestCouldNotBeRunSuccessfully() : void
+    public function testWillFailIfBaselineTestCouldNotBeRunSuccessfully(): void
     {
         $collector = new CollectTestExecutionMemoryFootprints();
 
@@ -170,7 +171,7 @@ MESSAGE
         $collector->executeAfterLastTest();
     }
 
-    private function createGarbageCollectableCycle() : void
+    private function createGarbageCollectableCycle(): void
     {
         $a = new stdClass();
         $b = new stdClass();
@@ -179,11 +180,11 @@ MESSAGE
         $b->a = $a;
     }
 
-    private function consumeMocks(stdClass ...$mocks) : void
+    private function consumeMocks(stdClass ...$mocks): void
     {
     }
 
-    public function testWillRegisterBaselineTestInTestSuite() : void
+    public function testWillRegisterBaselineTestInTestSuite(): void
     {
         $testSuite = $this->createMock(TestSuite::class);
 
@@ -195,7 +196,7 @@ MESSAGE
         (new CollectTestExecutionMemoryFootprints())->startTestSuite($testSuite);
     }
 
-    private function collectBaseline(CollectTestExecutionMemoryFootprints $collector) : void
+    private function collectBaseline(CollectTestExecutionMemoryFootprints $collector): void
     {
         $mocks = [$this->createMock(stdClass::class)];
 
@@ -215,9 +216,9 @@ MESSAGE
      *
      * @return stdClass[]
      */
-    private function createMocks(int $amount, array $mocks) : array
+    private function createMocks(int $amount, array $mocks): array
     {
-        return array_merge($mocks, array_map(function (int $index) : stdClass {
+        return array_merge($mocks, array_map(function (int $index): stdClass {
             return $this->createMock(stdClass::class);
         }, range(1, $amount)));
     }
