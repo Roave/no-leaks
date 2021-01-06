@@ -27,11 +27,7 @@
                 <referencedClass name="PHPUnit\Framework\TestListener"/>
             </errorLevel>
         </DeprecatedInterface>
-        <DeprecatedTrait>
-            <errorLevel type="suppress">
-                <file name="src/CollectTestExecutionMemoryFootprints.php"/>
-            </errorLevel>
-        </DeprecatedTrait>
+        <DeprecatedTrait errorLevel="suppress"/>
     </issueHandlers>
 
     <plugins>
