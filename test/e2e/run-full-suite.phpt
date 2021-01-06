@@ -11,10 +11,9 @@ require __DIR__ . '/../../bin/roave-no-leaks.php';
 
 ?>
 --EXPECTF--
-%aUncaught Exception: The following test produced memory leaks:
+%aThe following test produced memory leaks:
  * RoaveE2ETest\NoLeaks\PHPUnit\LeakyIntegrationTest::doesLeakAMock
  * RoaveE2ETest\NoLeaks\PHPUnit\LeakyIntegrationTest::doesLeakTwoObjects
  * RoaveE2ETest\NoLeaks\PHPUnit\LeakyIntegrationTest::doesLeakAnAutoloader
  * RoaveE2ETest\NoLeaks\PHPUnit\LeakyIntegrationTest::doesLeakAStaticAutoloader
  * RoaveE2ETest\NoLeaks\PHPUnit\LeakyIntegrationTest::doesLeakLotsAndLotsOfMemory
-%a

@@ -12,9 +12,6 @@ use function str_repeat;
 /** @coversNothing this is an integration test that spans the entirety of the library */
 final class LeakyIntegrationTest extends TestCase
 {
-    /** @var array<int, mixed> */
-    private static $memoryLeakingStupidMistake = [];
-
     /** @test */
     public function doesNotLeakMemory() : void
     {
@@ -44,7 +41,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakATinyAmountOfMemory() : void
     {
-        self::$memoryLeakingStupidMistake[] = null;
+        LeakyStaticObject::leak(null);
 
         $this->addToAssertionCount(1);
     }
@@ -52,7 +49,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakAMock() : void
     {
-        self::$memoryLeakingStupidMistake[] = $this->createMock(stdClass::class);
+        LeakyStaticObject::leak($this->createMock(stdClass::class));
 
         $this->addToAssertionCount(1);
     }
@@ -60,8 +57,8 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakOneObject() : void
     {
-        self::$memoryLeakingStupidMistake[] = new class {
-        };
+        LeakyStaticObject::leak(new class {
+        });
 
         $this->addToAssertionCount(1);
     }
@@ -69,10 +66,10 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakTwoObjects() : void
     {
-        self::$memoryLeakingStupidMistake[] = new class {
-        };
-        self::$memoryLeakingStupidMistake[] = new class {
-        };
+        LeakyStaticObject::leak(new class {
+        });
+        LeakyStaticObject::leak(new class {
+        });
 
         $this->addToAssertionCount(1);
     }
@@ -80,7 +77,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakTestItself() : void
     {
-        self::$memoryLeakingStupidMistake[] = $this;
+        LeakyStaticObject::leak($this);
 
         $this->addToAssertionCount(1);
     }
@@ -108,7 +105,9 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakLotsAndLotsOfMemory() : void
     {
-        self::$memoryLeakingStupidMistake[] = str_repeat('a', 10000);
+        LeakyStaticObject::leak(str_repeat('a', 100000));
+        LeakyStaticObject::leak(str_repeat('a', 100000));
+        LeakyStaticObject::leak(str_repeat('a', 100000));
 
         $this->addToAssertionCount(1);
     }
