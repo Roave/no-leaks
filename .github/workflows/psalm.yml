@@ -26,7 +26,6 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          coverage: "pcov"
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
           tools: composer:v2, cs2pr
