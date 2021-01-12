@@ -6,7 +6,7 @@
 
 This library is a [PHPUnit](https://github.com/sebastianbergmann/phpunit) plugin
 that detects memory leaks in tested code or tests.
-It utilizes `memory_get_usage()` to make sure the code beeing executed properly cleans up after itself.
+It utilizes `memory_get_usage()` to make sure the code being executed properly cleans up after itself.
 
 ## Installation
 
