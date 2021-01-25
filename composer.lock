@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a40ac571fb52272aae403495930fcd2",
+    "content-hash": "a3d54322aea604b1dc9faca717c1bd37",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -1913,12 +1913,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
@@ -3081,16 +3081,16 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.15.0",
+            "version": "0.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "a7c00148dda987252c7957dcce7914dac91a2b03"
+                "reference": "30ca25ce069bf4943c36e59b7df6954f6af05e64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/a7c00148dda987252c7957dcce7914dac91a2b03",
-                "reference": "a7c00148dda987252c7957dcce7914dac91a2b03",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/30ca25ce069bf4943c36e59b7df6954f6af05e64",
+                "reference": "30ca25ce069bf4943c36e59b7df6954f6af05e64",
                 "shasum": ""
             },
             "require": {
@@ -3133,7 +3133,7 @@
                 }
             ],
             "description": "Psalm plugin for PHPUnit",
-            "time": "2020-12-10T22:51:05+00:00"
+            "time": "2021-01-23T00:19:07+00:00"
         },
         {
             "name": "psr/container",
