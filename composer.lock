@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "624ac3d61cdcfc1f37f3826c2df490da",
+    "content-hash": "01f473dc51c96f788e2124f842c2c0df",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -4460,16 +4460,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.6.3",
+            "version": "4.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "f1a840727dd756899eee2f1f9ea443e265a4763f"
+                "reference": "97fe86c4e158b5a57c5150aa5055c38b5a809aab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f1a840727dd756899eee2f1f9ea443e265a4763f",
-                "reference": "f1a840727dd756899eee2f1f9ea443e265a4763f",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/97fe86c4e158b5a57c5150aa5055c38b5a809aab",
+                "reference": "97fe86c4e158b5a57c5150aa5055c38b5a809aab",
                 "shasum": ""
             },
             "require": {
@@ -4556,7 +4556,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2021-03-14T00:28:24+00:00"
+            "time": "2021-03-16T23:28:18+00:00"
         },
         {
             "name": "webmozart/path-util",
