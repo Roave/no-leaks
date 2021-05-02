@@ -110,7 +110,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakAnAutoloader(): void
     {
-        spl_autoload_register(static function (string $className): bool {
+        spl_autoload_register(function (string $className): bool {
             return false;
         });
 
