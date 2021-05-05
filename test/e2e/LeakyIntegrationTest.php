@@ -111,7 +111,7 @@ final class LeakyIntegrationTest extends TestCase
     public function doesLeakAnAutoloader(): void
     {
         spl_autoload_register(function (string $className): bool {
-            return false;
+            return $this !== $this; // always false, use $this variable
         });
 
         $this->addToAssertionCount(1);
