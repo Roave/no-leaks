@@ -17,9 +17,13 @@ jobs:
         php-version:
           - "7.4"
           - "8.0"
+          - "8.1"
         operating-system:
           - "ubuntu-latest"
         include:
+          - php-version: "8.0"
+            dependencies: "lowest"
+            operating-system: "ubuntu-latest"
           - php-version: "8.0"
             dependencies: "highest"
             operating-system: "ubuntu-latest"

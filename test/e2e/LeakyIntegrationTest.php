@@ -30,7 +30,16 @@ final class LeakyIntegrationTest extends TestCase
     {
         $a = new stdClass();
         $b = new stdClass();
-        $c = new stdClass();
+        $c = new class () extends stdClass {
+            public ?stdClass $a = null;
+
+            public function __destruct()
+            {
+                // until PHP 8.0 is supported, gc_collect_cycles() needs to be called twice
+                // for classes with destructor, see:
+                // https://github.com/php/php-src/commit/b58d74547f7700526b2d7e632032ed808abab442
+            }
+        };
 
         $a->b = $b;
         $b->c = $c;
