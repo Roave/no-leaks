@@ -10,8 +10,7 @@ final class LeakyStaticObject
     /** @var array<int, mixed> */
     public static array $memoryLeakingStupidMistake = [];
 
-    /** @param mixed $value */
-    public static function leak($value): void
+    public static function leak(mixed $value): void
     {
         self::$memoryLeakingStupidMistake[] = $value;
     }
