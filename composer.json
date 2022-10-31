@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "ext-json": "*",
         "phpunit/phpunit": "^9.5.8"
     },
@@ -21,6 +21,9 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "infection/extension-installer": false
+        },
+        "platform": {
+            "php": "8.0.99"
         },
         "sort-packages": true
     },
