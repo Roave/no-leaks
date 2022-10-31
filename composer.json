@@ -15,7 +15,7 @@
     "require": {
         "php": "~8.1.0 || ~8.2.0",
         "ext-json": "*",
-        "phpunit/phpunit": "^9.5.8"
+        "phpunit/phpunit": "^9.5.26"
     },
     "config": {
         "allow-plugins": {
@@ -31,10 +31,10 @@
         "bin/roave-no-leaks"
     ],
     "require-dev": {
-        "doctrine/coding-standard": "^9.0.0",
-        "roave/infection-static-analysis-plugin": "^1.8.0",
-        "psalm/plugin-phpunit": "^0.16.1",
+        "doctrine/coding-standard": "^9.0.2",
+        "roave/infection-static-analysis-plugin": "^1.25.0",
+        "psalm/plugin-phpunit": "^0.17.0",
         "squizlabs/php_codesniffer": "^3.7.1",
-        "vimeo/psalm": "^4.8.1"
+        "vimeo/psalm": "^4.29.0"
     }
 }
