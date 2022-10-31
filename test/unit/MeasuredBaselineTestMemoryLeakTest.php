@@ -14,7 +14,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
     {
         $measured = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 40, 50, 60, 70, 80],
-            [200, 40, 60, 80, 100, 110]
+            [200, 40, 60, 80, 100, 110],
         );
 
         self::assertTrue($measured->lessThan(19));
@@ -26,12 +26,12 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
     {
         $this->expectExceptionMessage(
             'Very inconsistent baseline memory usage profiles: '
-            . 'could not find two equal values in profile [100,10,20,30,40]'
+            . 'could not find two equal values in profile [100,10,20,30,40]',
         );
 
         MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50, 60, 70, 80],
-            [200, 60, 80, 100, 120]
+            [200, 60, 80, 100, 120],
         );
     }
 
@@ -40,12 +40,12 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
         self::assertEquals(
             MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
                 [100, 51, 52, 53],
-                [200, 51, 53, 54]
+                [200, 51, 53, 54],
             ),
             MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
                 [100, 50, 51, 51, 53],
-                [200, 49, 51, 52, 54]
-            )
+                [200, 49, 51, 52, 54],
+            ),
         );
     }
 
@@ -53,7 +53,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
     {
         $validMeasurement = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50, 60],
-            [200, 50, 60]
+            [200, 50, 60],
         );
 
         self::assertTrue($validMeasurement->lessThan(1));
@@ -63,7 +63,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
 
         MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50],
-            [200, 50]
+            [200, 50],
         );
     }
 
@@ -73,7 +73,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
 
         MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50, 50],
-            [200, 50, 49]
+            [200, 50, 49],
         );
     }
 
@@ -83,7 +83,7 @@ final class MeasuredBaselineTestMemoryLeakTest extends TestCase
 
         MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 50, 52],
-            [200, 49]
+            [200, 49],
         );
     }
 }

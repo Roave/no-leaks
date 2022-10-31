@@ -45,7 +45,7 @@ final class MeasuredBaselineTestMemoryLeak
      */
     public static function fromBaselineTestMemoryUsages(
         array $preBaselineTestMemoryUsages,
-        array $postBaselineTestMemoryUsages
+        array $postBaselineTestMemoryUsages,
     ): self {
         if (count($preBaselineTestMemoryUsages) !== count($postBaselineTestMemoryUsages)) {
             throw new Exception('Pre- and post- baseline test run collected memory usages don\'t match in number');
@@ -62,13 +62,13 @@ final class MeasuredBaselineTestMemoryLeak
             $relevantMemoryUsages,
             static function (int $memoryUsage): bool {
                 return $memoryUsage >= 0;
-            }
+            },
         );
 
         if (count($nonNegativeMemoryUsages) < 2) {
             throw new Exception(sprintf(
                 'At least 3 baseline test run memory profiles are required, %d given',
-                count($nonNegativeMemoryUsages) + 1
+                count($nonNegativeMemoryUsages) + 1,
             ));
         }
 
@@ -80,7 +80,7 @@ final class MeasuredBaselineTestMemoryLeak
             // @TODO good enough for detecting standard deviation for now, I guess? :|
             throw new Exception(sprintf(
                 'Very inconsistent baseline memory usage profiles: could not find two equal values in profile %s',
-                json_encode($memoryUsages, JSON_THROW_ON_ERROR)
+                json_encode($memoryUsages, JSON_THROW_ON_ERROR),
             ));
         }
 

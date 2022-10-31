@@ -82,12 +82,12 @@ final class CollectTestExecutionMemoryFootprints implements
 
         $baselineMemoryUsage = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             $this->preTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD],
-            $this->postTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD]
+            $this->postTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD],
         );
 
         unset(
             $this->preTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD],
-            $this->postTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD]
+            $this->postTestMemoryUsages[EmptyBaselineMemoryUsageTest::class . '::' . EmptyBaselineMemoryUsageTest::TEST_METHOD],
         );
 
         $successfullyExecutedTests = array_intersect_key($this->preTestMemoryUsages, $this->postTestMemoryUsages);
@@ -97,8 +97,8 @@ final class CollectTestExecutionMemoryFootprints implements
             array_map(
                 [MeasuredTestRunMemoryLeak::class, 'fromTestMemoryUsages'],
                 $successfullyExecutedTests,
-                $this->postTestMemoryUsages
-            )
+                $this->postTestMemoryUsages,
+            ),
         );
 
         $leaks = array_filter(array_map(static function (MeasuredTestRunMemoryLeak $profile) use ($baselineMemoryUsage): bool {
@@ -108,7 +108,7 @@ final class CollectTestExecutionMemoryFootprints implements
         if ($leaks !== []) {
             throw new Exception(sprintf(
                 "The following test produced memory leaks:\n * %s\n",
-                implode("\n * ", array_keys($leaks))
+                implode("\n * ", array_keys($leaks)),
             ));
         }
     }
