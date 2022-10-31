@@ -18,6 +18,9 @@
         "phpunit/phpunit": "^9.5.8"
     },
     "config": {
+        "allow-plugins": {
+            "infection/extension-installer": false
+        },
         "sort-packages": true
     },
     "bin": [
