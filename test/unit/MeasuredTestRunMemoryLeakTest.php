@@ -19,12 +19,12 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 20, 30, 40]
+            [200, 20, 30, 40],
         );
 
         $measuredTestLeak = MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
             [1000, 100, 200, 300],
-            [2000, 110, 220, 330]
+            [2000, 110, 220, 330],
         );
 
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
@@ -34,12 +34,12 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 20, 30, 40]
+            [200, 20, 30, 40],
         );
 
         $measuredTestLeak = MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
             [1000, 100, 200, 300],
-            [2000, 105, 220, 330]
+            [2000, 105, 220, 330],
         );
 
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
@@ -49,12 +49,12 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 20, 30, 40]
+            [200, 20, 30, 40],
         );
 
         $measuredTestLeak = MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
             [1000, 100, 200, 300],
-            [2000, 111, 220, 330]
+            [2000, 111, 220, 330],
         );
 
         self::assertTrue($measuredTestLeak->leaksMemory($averageBaselineOf10));
@@ -64,12 +64,12 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 20, 30, 40]
+            [200, 20, 30, 40],
         );
 
         $measuredTestLeak = MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
             [0, 0, 0],
-            [0, 0, 0]
+            [0, 0, 0],
         );
 
         self::assertFalse($measuredTestLeak->leaksMemory($averageBaselineOf10));
@@ -79,7 +79,7 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf0 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 10, 20, 30]
+            [200, 10, 20, 30],
         );
 
         self::assertFalse(MeasuredTestRunMemoryLeak::fromTestMemoryUsages([1], [0])->leaksMemory($averageBaselineOf0));
@@ -91,12 +91,12 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 20, 30, 40]
+            [200, 20, 30, 40],
         );
 
         $measuredTestLeak = MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
             [1000, 200, 300, 400],
-            [2000, 220, 330]
+            [2000, 220, 330],
         );
 
         self::assertTrue($measuredTestLeak->leaksMemory($averageBaselineOf10));
@@ -106,12 +106,12 @@ final class MeasuredTestRunMemoryLeakTest extends TestCase
     {
         $averageBaselineOf10 = MeasuredBaselineTestMemoryLeak::fromBaselineTestMemoryUsages(
             [100, 10, 20, 30],
-            [200, 20, 30, 40]
+            [200, 20, 30, 40],
         );
 
         $measuredTestLeak = MeasuredTestRunMemoryLeak::fromTestMemoryUsages(
             [1000, 200, 300],
-            [2000, 220, 330, 400]
+            [2000, 220, 330, 400],
         );
 
         self::assertTrue($measuredTestLeak->leaksMemory($averageBaselineOf10));

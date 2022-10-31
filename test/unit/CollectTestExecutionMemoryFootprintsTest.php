@@ -66,8 +66,7 @@ final class CollectTestExecutionMemoryFootprintsTest extends TestCase
         $this->expectExceptionMessage(<<<'MESSAGE'
 The following test produced memory leaks:
  * memoryEatingTest
-MESSAGE
-        );
+MESSAGE);
 
         $collector->executeAfterLastTest();
 
@@ -120,8 +119,7 @@ MESSAGE
         $this->expectExceptionMessage(<<<'MESSAGE'
 The following test produced memory leaks:
  * memoryEatingTest
-MESSAGE
-        );
+MESSAGE);
 
         $collector->executeAfterLastTest();
 
@@ -130,9 +128,7 @@ MESSAGE
 
     public function testWillFailIfBaselineTestCouldNotBeRun(): void
     {
-        $this->expectExceptionMessage(
-            'Could not find baseline test: impossible to determine PHPUnit base memory overhead'
-        );
+        $this->expectExceptionMessage('Could not find baseline test: impossible to determine PHPUnit base memory overhead');
 
         (new CollectTestExecutionMemoryFootprints())
             ->executeAfterLastTest();
@@ -164,9 +160,7 @@ MESSAGE
 
         $collector->executeBeforeTest(Baseline::class . '::' . Baseline::TEST_METHOD);
 
-        $this->expectExceptionMessage(
-            'Could not find baseline test: impossible to determine PHPUnit base memory overhead'
-        );
+        $this->expectExceptionMessage('Could not find baseline test: impossible to determine PHPUnit base memory overhead');
 
         $collector->executeAfterLastTest();
     }

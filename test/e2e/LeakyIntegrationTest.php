@@ -31,7 +31,7 @@ final class LeakyIntegrationTest extends TestCase
         $a = new stdClass();
         $b = new stdClass();
         $c = new class () extends stdClass {
-            public ?stdClass $a = null;
+            public stdClass|null $a = null;
 
             public function __destruct()
             {

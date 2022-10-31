@@ -31,7 +31,7 @@ final class MeasuredTestRunMemoryLeak
      */
     public static function fromTestMemoryUsages(
         array $preRunMemoryUsages,
-        array $postRunMemoryUsages
+        array $postRunMemoryUsages,
     ): self {
         $snapshotsCount = min(count($preRunMemoryUsages), count($postRunMemoryUsages));
 
@@ -52,7 +52,7 @@ final class MeasuredTestRunMemoryLeak
             static function (int $memoryUsage) use ($baseline): bool {
                     return ! $baseline->lessThan($memoryUsage);
             },
-            $this->memoryUsages
+            $this->memoryUsages,
         )) === [];
     }
 }
