@@ -180,7 +180,7 @@ MESSAGE
         $b->a = $a;
     }
 
-    private function consumeMocks(stdClass ...$mocks): void
+    private function consumeMocks(stdClass ...$_mocks): void
     {
     }
 
@@ -218,7 +218,7 @@ MESSAGE
      */
     private function createMocks(int $amount, array $mocks): array
     {
-        return array_merge($mocks, array_map(function (int $index): stdClass {
+        return array_merge($mocks, array_map(function (int $_index): stdClass {
             return $this->createMock(stdClass::class);
         }, range(1, $amount)));
     }

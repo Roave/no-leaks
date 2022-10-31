@@ -13,11 +13,18 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "~8.1.0 || ~8.2.0",
         "ext-json": "*",
         "phpunit/phpunit": "^9.5.8"
     },
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "infection/extension-installer": false
+        },
+        "platform": {
+            "php": "8.1.99"
+        },
         "sort-packages": true
     },
     "bin": [
@@ -27,7 +34,7 @@
         "doctrine/coding-standard": "^9.0.0",
         "roave/infection-static-analysis-plugin": "^1.8.0",
         "psalm/plugin-phpunit": "^0.16.1",
-        "squizlabs/php_codesniffer": "^3.6.0",
+        "squizlabs/php_codesniffer": "^3.7.1",
         "vimeo/psalm": "^4.8.1"
     }
 }

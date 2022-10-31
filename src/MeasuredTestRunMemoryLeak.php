@@ -6,8 +6,8 @@ namespace Roave\NoLeaks\PHPUnit;
 
 use function array_filter;
 use function array_map;
-use function array_merge;
 use function array_slice;
+use function assert;
 use function count;
 use function min;
 
@@ -20,17 +20,14 @@ use function min;
  */
 final class MeasuredTestRunMemoryLeak
 {
-    /** @var array<int, int> positive integers, representing used memory */
-    private array $memoryUsages;
-
-    private function __construct(int $firstMemoryUsage, int ...$furtherMemoryUsages)
+    /** @param non-empty-list<int> $memoryUsages */
+    private function __construct(private readonly array $memoryUsages)
     {
-        $this->memoryUsages = array_merge([$firstMemoryUsage], $furtherMemoryUsages);
     }
 
     /**
-     * @param array<int, int> $preRunMemoryUsages
-     * @param array<int, int> $postRunMemoryUsages
+     * @param list<int> $preRunMemoryUsages
+     * @param list<int> $postRunMemoryUsages
      */
     public static function fromTestMemoryUsages(
         array $preRunMemoryUsages,
@@ -38,9 +35,13 @@ final class MeasuredTestRunMemoryLeak
     ): self {
         $snapshotsCount = min(count($preRunMemoryUsages), count($postRunMemoryUsages));
 
-        return new self(...array_map(static function (int $beforeRun, int $afterRun): int {
+        $results = array_map(static function (int $beforeRun, int $afterRun): int {
             return $afterRun - $beforeRun;
-        }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount)));
+        }, array_slice($preRunMemoryUsages, 0, $snapshotsCount), array_slice($postRunMemoryUsages, 0, $snapshotsCount));
+
+        assert($results !== []);
+
+        return new self($results);
     }
 
     public function leaksMemory(MeasuredBaselineTestMemoryLeak $baseline): bool

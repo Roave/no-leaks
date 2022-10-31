@@ -18,10 +18,8 @@ use function array_intersect_key;
 use function array_key_exists;
 use function array_keys;
 use function array_map;
-use function assert;
 use function gc_collect_cycles;
 use function implode;
-use function is_array;
 use function memory_get_usage;
 use function sprintf;
 
@@ -40,10 +38,10 @@ final class CollectTestExecutionMemoryFootprints implements
 {
     use TestListenerDefaultImplementation;
 
-    /** @var array<string, array<int, int>> */
+    /** @var array<string, list<int>> */
     private array $preTestMemoryUsages = [];
 
-    /** @var array<string, array<int, int>> */
+    /** @var array<string, list<int>> */
     private array $postTestMemoryUsages = [];
 
     public function startTestSuite(TestSuite $suite): void
@@ -102,8 +100,6 @@ final class CollectTestExecutionMemoryFootprints implements
                 $this->postTestMemoryUsages
             )
         );
-
-        assert(is_array($memoryUsages));
 
         $leaks = array_filter(array_map(static function (MeasuredTestRunMemoryLeak $profile) use ($baselineMemoryUsage): bool {
             return $profile->leaksMemory($baselineMemoryUsage);

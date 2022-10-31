@@ -65,25 +65,9 @@ final class LeakyIntegrationTest extends TestCase
     }
 
     /** @test */
-    public function doesNotLeakGarbageCollectedProphecyMocks(): void
-    {
-        LeakyStaticObject::leak($this->prophesize(stdClass::class));
-
-        $this->addToAssertionCount(1);
-    }
-
-    /** @test */
     public function doesLeakAMock(): void
     {
         LeakyStaticObject::leak($this->createMock(stdClass::class));
-
-        $this->addToAssertionCount(1);
-    }
-
-    /** @test */
-    public function doesLeakAProphecyMock(): void
-    {
-        LeakyStaticObject::leak($this->prophesize(stdClass::class));
 
         $this->addToAssertionCount(1);
     }
@@ -119,7 +103,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakAnAutoloader(): void
     {
-        spl_autoload_register(function (string $className): bool {
+        spl_autoload_register(function (string $_className): bool {
             return $this !== $this; // always false, use $this variable
         });
 
@@ -129,7 +113,7 @@ final class LeakyIntegrationTest extends TestCase
     /** @test */
     public function doesLeakAStaticAutoloader(): void
     {
-        spl_autoload_register(static function (string $className): bool {
+        spl_autoload_register(static function (string $_className): bool {
             return false;
         });
 

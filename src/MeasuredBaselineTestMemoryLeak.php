@@ -9,9 +9,9 @@ use Exception;
 use function array_count_values;
 use function array_filter;
 use function array_map;
-use function array_merge;
 use function array_slice;
 use function array_sum;
+use function array_values;
 use function count;
 use function json_encode;
 use function sprintf;
@@ -30,19 +30,18 @@ use const JSON_THROW_ON_ERROR;
 final class MeasuredBaselineTestMemoryLeak
 {
     /**
-     * @var array<int, int> the amount of memory consumed for running the baseline test, usually caused by collecting
-     *                      stats about it or similar state, retained by the test runner and its plugins
+     * @param non-empty-list<int> $baselineTestRunsMemoryLeaks the amount of memory consumed for running the
+     *                                                                    baseline test, usually caused by collecting
+     *                                                                    stats about it or similar state, retained by
+     *                                                                    the test runner and its plugins
      */
-    private array $baselineTestRunsMemoryLeaks;
-
-    private function __construct(int $firstMemoryUsage, int ...$furtherMemoryUsages)
+    private function __construct(private readonly array $baselineTestRunsMemoryLeaks)
     {
-        $this->baselineTestRunsMemoryLeaks = array_merge([$firstMemoryUsage], $furtherMemoryUsages);
     }
 
     /**
-     * @param array<int, int> $preBaselineTestMemoryUsages
-     * @param array<int, int> $postBaselineTestMemoryUsages
+     * @param list<int> $preBaselineTestMemoryUsages
+     * @param list<int> $postBaselineTestMemoryUsages
      */
     public static function fromBaselineTestMemoryUsages(
         array $preBaselineTestMemoryUsages,
@@ -85,7 +84,7 @@ final class MeasuredBaselineTestMemoryLeak
             ));
         }
 
-        return new self(...$nonNegativeMemoryUsages);
+        return new self(array_values($nonNegativeMemoryUsages));
     }
 
     public function lessThan(int $testRunMemoryLeak): bool
