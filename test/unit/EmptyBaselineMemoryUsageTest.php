@@ -12,6 +12,7 @@ use function memory_get_usage;
 /** @covers \Roave\NoLeaks\PHPUnit\EmptyBaselineMemoryUsageTest */
 final class EmptyBaselineMemoryUsageTest extends TestCase
 {
+    /** @psalm-suppress UnusedVariable */
     public function testDoesNotProduceMemoryLeaks(): void
     {
         $test = new Baseline();

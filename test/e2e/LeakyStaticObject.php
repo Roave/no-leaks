@@ -12,6 +12,7 @@ final class LeakyStaticObject
 
     public static function leak(mixed $value): void
     {
+        /** @psalm-suppress MixedAssignment */
         self::$memoryLeakingStupidMistake[] = $value;
     }
 }

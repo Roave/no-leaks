@@ -38,10 +38,10 @@ final class CollectTestExecutionMemoryFootprints implements
 {
     use TestListenerDefaultImplementation;
 
-    /** @var array<string, array<int, int>> */
+    /** @var array<string, list<int>> */
     private array $preTestMemoryUsages = [];
 
-    /** @var array<string, array<int, int>> */
+    /** @var array<string, list<int>> */
     private array $postTestMemoryUsages = [];
 
     public function startTestSuite(TestSuite $suite): void
