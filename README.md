@@ -23,7 +23,7 @@ vendor/bin/roave-no-leaks
 If any memory leaks are detected, you should see an output like
 following:
 
-```
+```text
 Exception: The following test produced memory leaks:
  * My\Leaky\Test::testSomething
  * My\Leaky\Test::testSomethingElse
@@ -38,9 +38,9 @@ configuration parameters and console parameters of PHPUnit.
 
 Please be aware that this is not a full substitute for PHPUnit:
 
- * the output format is to be improved
- * memory leak detection for scalar types and arrays is not reliable
- * can fail depending on xdebug/phpdbg/php-sapi changes 
+* the output format is to be improved
+* memory leak detection for scalar types and arrays is not reliable
+* can fail depending on xdebug/phpdbg/php-sapi changes
 
 ## Professional Support
 
