@@ -23,8 +23,6 @@ use function implode;
 use function memory_get_usage;
 use function sprintf;
 
-use const PHP_VERSION_ID;
-
 /**
  * Note: we need to implement TestListener, because the hook API is not allowing
  *       us to interact with test suite instances. This means that the entire package
@@ -52,9 +50,6 @@ final class CollectTestExecutionMemoryFootprints implements
     public function executeBeforeTest(string $test): void
     {
         gc_collect_cycles();
-        if (PHP_VERSION_ID < 80100) {
-            gc_collect_cycles();
-        }
 
         $this->preTestMemoryUsages[$test][] = memory_get_usage();
     }
@@ -62,9 +57,6 @@ final class CollectTestExecutionMemoryFootprints implements
     public function executeAfterSuccessfulTest(string $test, float $time): void
     {
         gc_collect_cycles();
-        if (PHP_VERSION_ID < 80100) {
-            gc_collect_cycles();
-        }
 
         $this->postTestMemoryUsages[$test][] = memory_get_usage();
     }
