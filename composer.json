@@ -35,6 +35,6 @@
         "roave/infection-static-analysis-plugin": "^1.35.0",
         "psalm/plugin-phpunit": "^0.18.4",
         "squizlabs/php_codesniffer": "^3.9.0",
-        "vimeo/psalm": "^5.23.0"
+        "vimeo/psalm": "^5.23.1"
     }
 }
