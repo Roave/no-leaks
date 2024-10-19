@@ -15,7 +15,7 @@
     "require": {
         "php": "~8.1.0 || ~8.2.0",
         "ext-json": "*",
-        "phpunit/phpunit": "^9.6.20"
+        "phpunit/phpunit": "^11.4.2"
     },
     "config": {
         "allow-plugins": {
